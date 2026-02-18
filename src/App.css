@@ -1,0 +1,38 @@
+.App {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth scrolling for the entire app */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure proper stacking context */
+.App > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Custom scrollbar for the entire app */
+.App::-webkit-scrollbar {
+  width: 8px;
+}
+
+.App::-webkit-scrollbar-track {
+  background: var(--main-bg);
+}
+
+.App::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+.App::-webkit-scrollbar-thumb:hover {
+  background: var(--navbar-footer);
+}

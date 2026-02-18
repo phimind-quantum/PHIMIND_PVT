@@ -1,0 +1,361 @@
+.roadmap {
+  padding: 100px 0;
+  background: var(--main-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.roadmap-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.roadmap-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.roadmap-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.phi-highlight {
+  color: var(--text-color);
+  text-shadow: 0 0 20px rgba(8, 203, 0, 0.6);
+  position: relative;
+}
+
+.roadmap-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  opacity: 0.8;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.company-intro {
+  background: linear-gradient(135deg, rgba(8, 203, 0, 0.05), rgba(37, 57, 0, 0.1));
+  border: 1px solid rgba(8, 203, 0, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 60px;
+  backdrop-filter: blur(10px);
+}
+
+.company-intro h3 {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.focus-text {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.intro-text {
+  font-size: 1rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.phases-container {
+  position: relative;
+  margin-bottom: 80px;
+}
+
+.phases-container::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--text-color), rgba(8, 203, 0, 0.3));
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.phase-card {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 2;
+}
+
+.phase-card:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.phase-card:nth-child(even) .phase-content {
+  text-align: right;
+  margin-right: 0;
+  margin-left: 60px;
+}
+
+.phase-card:nth-child(odd) .phase-content {
+  margin-right: 60px;
+}
+
+.phase-number {
+  background: linear-gradient(135deg, var(--text-color), var(--accent));
+  color: var(--main-bg);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 3;
+  box-shadow: 0 0 30px rgba(8, 203, 0, 0.4);
+  flex-shrink: 0;
+}
+
+.phase-content {
+  background: linear-gradient(135deg, rgba(8, 203, 0, 0.05), rgba(37, 57, 0, 0.1));
+  border: 1px solid rgba(8, 203, 0, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  text-align: left !important;
+
+}
+
+.phase-description,
+.phase-focus,
+.phase-outcome {
+  padding-left: 20px;
+  
+}
+
+
+.phase-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(8, 203, 0, 0.2);
+}
+
+.phase-title {
+  font-size: 1.4rem;
+  color: var(--text-color);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.phase-description {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.phase-focus, .phase-outcome {
+  margin-bottom: 20px;
+}
+
+.phase-focus h4, .phase-outcome h4 {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.phase-focus ul {
+  list-style: none;
+  padding: 0;
+}
+
+.phase-focus li {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+  opacity: 0.9;
+}
+
+.phase-focus li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.phase-outcome p {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  opacity: 0.9;
+  font-style: italic;
+}
+
+.revenue-activities {
+  background: linear-gradient(135deg, rgba(8, 203, 0, 0.05), rgba(37, 57, 0, 0.1));
+  border: 1px solid rgba(8, 203, 0, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 60px;
+  backdrop-filter: blur(10px);
+}
+
+.revenue-activities h3 {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.revenue-activities > p {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 30px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.activity-item {
+  background: rgba(8, 203, 0, 0.1);
+  border: 1px solid rgba(8, 203, 0, 0.3);
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(8, 203, 0, 0.2);
+}
+
+.activity-item h4 {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.activity-item p {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  opacity: 0.8;
+}
+
+.conclusion {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(8, 203, 0, 0.05), rgba(37, 57, 0, 0.1));
+  border: 1px solid rgba(8, 203, 0, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+}
+
+.conclusion h3 {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.conclusion p {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .phases-container::before {
+    left: 30px;
+  }
+  
+  .phase-card {
+    flex-direction: column !important;
+    align-items: flex-start;
+    padding-left: 80px;
+  }
+  
+  .phase-card:nth-child(even) .phase-content,
+  .phase-card:nth-child(odd) .phase-content {
+    text-align: left;
+    margin: 20px 0 0 0;
+    max-width: 100%;
+  }
+  
+  .phase-number {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .roadmap {
+    padding: 80px 0;
+  }
+  
+  .roadmap-title {
+    font-size: 2.5rem;
+  }
+  
+  .roadmap-subtitle {
+    font-size: 1rem;
+  }
+  
+  .company-intro,
+  .revenue-activities,
+  .conclusion {
+    padding: 30px 20px;
+  }
+  
+  .activities-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .phase-content {
+    padding: 25px 20px;
+  }
+  
+  .phases-container::before {
+    left: 20px;
+  }
+  
+  .phase-card {
+    padding-left: 60px;
+  }
+  
+  .phase-number {
+    width: 50px;
+    height: 50px;
+    font-size: 0.8rem;
+  }
+}
