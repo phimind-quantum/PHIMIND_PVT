@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaInstagram, FaFacebook, FaTwitter, FaArrowUp } from 'react-icons/fa';
+import { FaInstagram, FaFacebook, FaTwitter, FaArrowUp, FaEnvelope  } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
@@ -53,12 +53,12 @@ const Footer = () => {
       url: 'https://www.instagram.com/_phimind_?igsh=N25tazVnZzlnazZz&utm_source=qr',
       color: '#E4405F'
     },
-    // {
-    //   name: 'Facebook',
-    //   icon: FaFacebook,
-    //   url: 'https://facebook.com/phimind',
-    //   color: '#1877F2'
-    // },
+    {
+      name: 'E-mail',
+      icon: FaEnvelope ,
+      url: 'mailto:info@phimind.in',
+      color: '#460f0f'
+    },
     {
       name: 'Twitter',
       icon: FaTwitter,

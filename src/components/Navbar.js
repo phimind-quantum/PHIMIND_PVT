@@ -22,14 +22,17 @@ const Navbar = () => {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+  
 
   return (
-    <motion.nav 
-      className={`navbar ${isScrolled ? 'scrolled' : ''}`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
+    <motion.nav
+  className={`navbar ${isScrolled ? 'scrolled' : ''}`}
+  style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999 }}
+  initial={{ opacity: 0, y: -40 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+>
+    
       <div className="nav-container">
         <motion.div 
           className="nav-logo"

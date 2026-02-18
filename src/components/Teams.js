@@ -10,13 +10,13 @@ const Teams = () => {
     {
       id: 1,
       name: "Sonet D Thomas",
-      designation: "Co-founder, Quantum Computing Lead",
+      designation: "Co-founder & CEO",
       image: SonetImg
     },
     {
       id: 2,
       name: "Naveen Joy",
-      designation: "Co-founder, AI Research Director",
+      designation: "Co-founder & CEO",
       image: NaveenImg
     }
   ];
