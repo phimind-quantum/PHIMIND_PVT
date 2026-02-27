@@ -1,59 +1,41 @@
+/* ================= NAVBAR ================= */
+
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
   z-index: 9999;
-
-  padding: 20px 0;
-
-  background: #000; /* solid like original */
-  border-bottom: 1px solid rgba(204, 149, 68, 0.2);
-
-  box-shadow: 0 4px 30px rgba(54, 21, 0, 0.3);
-
+  padding: 18px 0;
+  background: #000;
+  border-bottom: 1px solid rgba(8, 203, 0, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
   transition: all 0.35s ease;
 }
 
-
 .navbar.scrolled {
-  padding: 15px 0;
-
-  background: rgba(0, 0, 0, 0.45);
+  padding: 12px 0;
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-
-  box-shadow:
-    0 10px 35px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.55);
 }
 
-
-.navbar.scrolled::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0.08),
-    rgba(255,255,255,0.02),
-    rgba(255,255,255,0.08)
-  );
-  pointer-events: none;
-}
-
-
+/* ================= CONTAINER ================= */
 
 .nav-container {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
+/* ================= LOGO ================= */
 
 .nav-logo a {
   display: flex;
@@ -61,54 +43,37 @@
   text-decoration: none;
   color: var(--white);
   font-weight: 700;
-  font-size: 24px;
+  font-size: 22px;
   letter-spacing: 1px;
 }
 
+.nav-logo .rive-hover-container { display: none; }
+
 .logo-text {
-  margin-left: 10px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
   display: flex;
   align-items: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.phi-part {
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
+.phi-part  { transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+.mind-part { transition: all 0.3s ease; }
 
-/* 
- */
-
-.mind-part {
-  transition: all 0.3s ease;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
+/* ================= DESKTOP NAV LINKS ================= */
 
 .nav-links {
   display: flex;
-  gap: 40px;
+  gap: 8px;
   align-items: center;
-  margin-right: 20px;
 }
 
 .nav-link {
   background: none;
   border: none;
   color: var(--white);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-  padding: 8px 16px;
+  padding: 8px 14px;
   border-radius: 8px;
   transition: all 0.3s ease;
   position: relative;
@@ -118,45 +83,117 @@
 .nav-link::before {
   content: '';
   position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(8, 203, 0, 0.15), transparent);
+  transition: left 0.4s;
+}
+
+.nav-link:hover::before { left: 100%; }
+.nav-link:hover { background: rgba(8, 203, 0, 0.12); color: var(--text-color); }
+
+/* ================= HAMBURGER ================= */
+
+.hamburger {
+  display: none; /* hidden on desktop */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  background: none;
+  border: 1px solid rgba(8, 203, 0, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 6px;
+  z-index: 10001;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.hamburger:hover {
+  background: rgba(8, 203, 0, 0.08);
+  border-color: rgba(8, 203, 0, 0.6);
+}
+
+.hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ================= MOBILE OVERLAY MENU ================= */
+/*
+  This is position:fixed so it is completely outside document flow.
+  It will NEVER push content down or create blank space.
+  It is also conditionally rendered in JS (AnimatePresence),
+  so it doesn't exist in the DOM when closed.
+*/
+.mobile-menu {
+  position: fixed;
   top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.97);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
 }
 
-.nav-link:hover::before {
-  left: 100%;
+.mobile-menu .nav-link {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 14px 0;
+  width: 200px;
+  text-align: center;
+  border: 1px solid rgba(8, 203, 0, 0.2);
+  border-radius: 12px;
+  color: var(--white);
 }
 
-.nav-link:hover {
-  background: rgba(8, 203, 0, 0.2);
-  transform: translateY(-2px);
+.mobile-menu .nav-link:hover {
+  background: rgba(8, 203, 0, 0.12);
+  border-color: var(--text-color);
   color: var(--text-color);
 }
 
-/* Responsive design */
+/* ================= TABLET ================= */
+
+@media (max-width: 1024px) {
+  .nav-links { gap: 4px; }
+  .nav-link  { font-size: 14px; padding: 7px 11px; }
+}
+
+/* ================= MOBILE — show hamburger, hide desktop nav ================= */
+
 @media (max-width: 768px) {
-  .navbar.scrolled {
-    margin: 5px 10px;
-    padding: 12px 0;
-  }
-  
-  .nav-container {
-    padding: 0 15px;
-  }
-  
-  .nav-logo a {
-    font-size: 20px;
-  }
-  
-  .nav-links {
-    gap: 20px;
-  }
-  
-  .nav-link {
-    font-size: 14px;
-    padding: 6px 12px;
-  }
+  .navbar         { padding: 12px 0; }
+  .navbar.scrolled{ padding: 10px 0; }
+  .nav-container  { padding: 0 16px; }
+  .nav-logo a     { font-size: 19px; }
+
+  .nav-links  { display: none !important; }
+  .hamburger  { display: flex; }
+}
+
+/* ================= SMALL PHONES ================= */
+
+@media (max-width: 480px) {
+  .nav-logo a { font-size: 17px; }
+  .mobile-menu .nav-link { font-size: 18px; width: 175px; padding: 12px 0; }
 }

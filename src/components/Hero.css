@@ -1,29 +1,37 @@
+/* ================= HERO — exactly one viewport ================= */
+
 .hero {
-  min-height: 10vh;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
   background: var(--main-bg);
   position: relative;
-  overflow: hidden;
   display: flex;
   align-items: center;
-  padding-top: 100px;
+  padding-top: 70px;
+  box-sizing: border-box;
 }
 
 .hero-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+  max-width: 1100px;
   width: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
   position: relative;
   z-index: 2;
 }
 
+/* ================= TWO-COLUMN LAYOUT ================= */
+
 .hero-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 48px;
   align-items: center;
-  min-height: 80vh;
 }
+
+/* ================= LEFT — glitch orb (smaller than before) ================= */
 
 .hero-left {
   display: flex;
@@ -31,20 +39,12 @@
   align-items: center;
 }
 
-.company-logo-image {
-  width: 350px;          /* adjust as needed */
-  height: auto;
-  display: block;
-  z-index: 3;
-  position: relative;
-  filter: drop-shadow(0 0 20px rgba(8, 203, 0, 0.4));
-}
-
-
+/* Orb is now 260px — noticeably smaller */
 .glitch-container {
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: 260px;
+  height: 260px;
+  flex-shrink: 0;
 }
 
 .glitch-element {
@@ -67,76 +67,28 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
 }
 
-.company-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* Logo image inside orb — sized relative to orb */
+.company-logo-image {
+  width: 200px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 0 18px rgba(8, 203, 0, 0.45));
 }
 
-.logo-phi {
-  font-size: 6rem;
-  font-weight: 700;
-  color: var(--text-color);
-  text-shadow: 
-    0 0 20px rgba(8, 203, 0, 0.8),
-    0 0 40px rgba(8, 203, 0, 0.6),
-    0 0 60px rgba(8, 203, 0, 0.4);
-  animation: logo-pulse 3s ease-in-out infinite;
-}
-
-.logo-text-small {
-  font-size: 3rem;
-  font-weight: 600;
-  color: var(--white);
-  text-shadow: 0 0 15px rgba(238, 238, 238, 0.5);
-}
-
-@keyframes logo-pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  10% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-}
-
-.glitch-1 {
-  animation: glitch-float 4s ease-in-out infinite;
-}
-
-.glitch-2 {
-  animation: glitch-float 4s ease-in-out infinite 1s;
-  background: linear-gradient(45deg, var(--navbar-footer), var(--accent));
-}
-
-.glitch-3 {
-  animation: glitch-float 4s ease-in-out infinite 2s;
-  background: linear-gradient(45deg, var(--accent), var(--text-color));
-}
+.glitch-1 { animation: glitch-float 4s ease-in-out infinite; }
+.glitch-2 { animation: glitch-float 4s ease-in-out infinite 1.3s; background: linear-gradient(45deg, var(--navbar-footer), var(--accent)); }
+.glitch-3 { animation: glitch-float 4s ease-in-out infinite 2.6s; background: linear-gradient(45deg, var(--accent), var(--text-color)); }
 
 @keyframes glitch-float {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.1;
-  }
-  25% {
-    transform: translate(-10px, -10px) scale(1.1);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translate(10px, -5px) scale(0.9);
-    opacity: 0.15;
-  }
-  75% {
-    transform: translate(-5px, 10px) scale(1.05);
-    opacity: 0.25;
-  }
+  0%, 100% { transform: translate(0, 0)        scale(1);    opacity: 0.10; }
+  25%       { transform: translate(-7px, -7px) scale(1.07); opacity: 0.20; }
+  50%       { transform: translate(7px, -3px)  scale(0.93); opacity: 0.13; }
+  75%       { transform: translate(-3px, 7px)  scale(1.04); opacity: 0.20; }
 }
+
+/* ================= RIGHT — text column ================= */
 
 .hero-right {
   display: flex;
@@ -148,173 +100,215 @@
   max-width: 500px;
 }
 
-.company-name {
-  font-size: 4rem;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 20px;
-  line-height: 1.2;
-  position: relative;
+/* ═══════════════════════════════════════════════════════
+   COMPANY NAME BLOCK
+   Just: [phi-wrap][Mind] — no logo image here at all.
+
+   phi-wrap has a FIXED width matching the widest text ("phi").
+   When typewriter shows "Φ" (narrower) or "" (erasing), the
+   leftover space is hidden inside the box via overflow:hidden.
+   "Mind" never moves because the box width never changes.
+   gap: 0 on .company-name-text → zero space between phi & Mind.
+═══════════════════════════════════════════════════════ */
+
+.company-name-block {
+  margin-bottom: 0;
 }
 
-.logo-text {
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  align-items: center;
+.company-name-text {
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+  margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  /* white-space: nowrap; */
+}
+
+/*
+  Fixed-width container for the animating text.
+  Width = "phi" rendered width at current font size ≈ 3ch.
+  overflow: hidden clips any extra space so Mind never shifts.
+*/
+.phi-wrap {
+  display: inline-block;
+  width: 2.3ch;
+  overflow: hidden;
+  text-align: left;
+  vertical-align: baseline;
 }
 
 .phi-part {
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-.phi-part.animated {
   color: var(--text-color);
-  text-shadow: 0 0 25px rgba(8, 203, 0, 0.5);
-  transform: scale(1.1);
+  text-shadow: 0 0 14px rgba(8, 203, 0, 0.5);
+  display: inline;
 }
 
 .mind-part {
-  transition: all 0.3s ease;
+  color: var(--white);
 }
 
-.animation-indicator {
-  font-size: 2rem;
-  color: var(--text-color);
-  margin-left: 10px;
-  opacity: 0.7;
+/* Gap below name and the rest of the content */
+.name-spacer {
+  height: 22px;
 }
+
+/* ================= TAGLINE ================= */
 
 .tagline {
-  font-size: 1.5rem;
+  font-size: clamp(0.88rem, 1.6vw, 1.15rem);
   color: var(--text-color);
-  margin-bottom: 30px;
-  font-weight: 300;
-  opacity: 0.8;
+  margin-bottom: 16px;
+  font-weight: 400;
+  opacity: 0.85;
+  letter-spacing: 0.4px;
 }
 
+/* ================= DESCRIPTION ================= */
+
 .hero-description {
-  margin-bottom: 40px;
+  margin-bottom: 28px;
+  max-width: 480px;
 }
 
 .hero-description p {
-  font-size: 1.1rem;
+  font-size: clamp(0.8rem, 1.2vw, 0.93rem);
   color: var(--text-color);
-  margin-bottom: 15px;
+  margin-bottom: 8px;
   line-height: 1.7;
-  opacity: 0.9;
+  opacity: 0.72;
 }
+
+/* ================= CTA ================= */
 
 .hero-cta {
   display: flex;
-  gap: 20px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
+/* ================= BACKGROUND ================= */
+
 .hero-background {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   z-index: 1;
+  pointer-events: none;
 }
 
 .bg-pattern {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(circle at 20% 80%, rgba(54, 21, 0, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(96, 54, 1, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(204, 149, 68, 0.1) 0%, transparent 50%);
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(54, 21, 0, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(96, 54, 1, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(8, 203, 0, 0.04) 0%, transparent 50%);
   animation: pattern-float 20s ease-in-out infinite;
 }
 
 @keyframes pattern-float {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(-10px, -10px) scale(0.05);
-  }
-  66% {
-    transform: translate(10px, 5px) scale(0.95);
-  }
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-7px, -7px) scale(0.98); }
+  66%       { transform: translate(7px, 4px)   scale(1.02); }
 }
 
 .bg-gradient {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, 
-    rgba(204, 149, 68, 0.1) 0%, 
-    rgba(96, 54, 1, 0.05) 50%, 
-    rgba(54, 21, 0, 0.02) 100%);
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 203, 0, 0.03) 0%,
+    rgba(96, 54, 1, 0.02) 50%,
+    transparent 100%
+  );
 }
 
-/* Responsive design */
+/* ================= TABLET (≤1024px) ================= */
+
 @media (max-width: 1024px) {
+  .hero { padding-top: 60px; }
+  .hero-container { padding: 0 24px; }
+
   .hero-content {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 24px;
     text-align: center;
   }
-  
-  .hero-left {
-    order: 2;
+
+  /* Stack: orb on top, text below */
+  .hero-left  { order: 1; }
+  .hero-right { order: 2; }
+
+  /* Smaller orb on tablet */
+  .glitch-container { width: 200px; height: 200px; }
+  .company-logo-image { width: 155px; }
+
+  .hero-text { max-width: 100%; }
+
+  .company-name-text { font-size: clamp(1.6rem, 4.5vw, 2.4rem); }
+
+  .hero-description { margin: 0 auto 24px; }
+  .hero-cta { justify-content: center; }
+}
+
+/* ================= MOBILE (≤768px) ================= */
+
+@media (max-width: 768px) {
+  .hero { padding-top: 56px; }
+  .hero-container { padding: 0 18px; }
+
+  .hero-content { gap: 16px; }
+
+  .glitch-container { width: 160px; height: 160px; }
+  .company-logo-image { width: 124px; }
+
+  .company-name-text { font-size: clamp(1.4rem, 5.5vw, 2rem); }
+
+  .name-spacer { height: 16px; }
+  .tagline { margin-bottom: 12px; }
+
+  .desc-secondary { display: none; }
+  .hero-description { margin-bottom: 18px; }
+
+  .hero-cta { gap: 10px; }
+}
+
+/* ================= SMALL PHONES (≤480px) ================= */
+
+@media (max-width: 480px) {
+  .hero { padding-top: 52px; }
+  .hero-container { padding: 0 14px; }
+
+  .hero-content { gap: 12px; }
+
+  .glitch-container { width: 130px; height: 130px; }
+  .company-logo-image { width: 100px; }
+
+  .company-name-text { font-size: clamp(1.2rem, 7vw, 1.7rem); }
+
+  .name-spacer { height: 12px; }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
   }
-  
-  .hero-right {
-    order: 1;
-  }
-  
-  .glitch-container {
-    width: 300px;
-    height: 300px;
-  }
-  
-  .company-name {
-    font-size: 3rem;
-  }
-  
-  .tagline {
-    font-size: 1.3rem;
+
+  .hero-cta .btn {
+    width: 100%;
+    max-width: 240px;
+    text-align: center;
+    padding: 10px 14px;
+    font-size: 13px;
   }
 }
 
-@media (max-width: 768px) {
-  .hero {
-    padding-top: 80px;
-    min-height: 90vh;
-  }
-  
-  .hero-container {
-    padding: 0 15px;
-  }
-  
-  .company-name {
-    font-size: 2.5rem;
-  }
-  
-  .tagline {
-    font-size: 1.2rem;
-  }
-  
-  .hero-description p {
-    font-size: 1rem;
-  }
-  
-  .hero-cta {
-    justify-content: center;
-  }
-  
-  .glitch-container {
-    width: 250px;
-    height: 250px;
-  }
+/* ================= VERY SMALL (≤360px) ================= */
+
+@media (max-width: 360px) {
+  .glitch-container { width: 110px; height: 110px; }
+  .company-logo-image { width: 85px; }
+  .company-name-text { font-size: 1.1rem; }
+  .hero-description { display: none; }
 }
