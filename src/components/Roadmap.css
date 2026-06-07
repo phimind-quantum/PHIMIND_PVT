@@ -1,373 +1,210 @@
 .roadmap {
-  padding: 90px 0;
   background: var(--main-bg);
   position: relative;
-  overflow: hidden;
 }
 
-.roadmap-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px;
+.roadmap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(0, 204, 76, 0.04), transparent 60%);
+  pointer-events: none;
 }
 
 .roadmap-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 64px;
 }
 
-.roadmap-title {
-  font-size: clamp(1.8rem, 4.5vw, 3.2rem);
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 14px;
-  line-height: 1.2;
+.roadmap-header .section-divider {
+  margin: 24px auto;
 }
 
-.phi-highlight {
-  color: var(--text-color);
-  text-shadow: 0 0 18px rgba(8, 203, 0, 0.5);
-}
-
-.roadmap-subtitle {
-  font-size: clamp(0.88rem, 1.8vw, 1.1rem);
-  color: var(--text-primary);
-  opacity: 0.75;
-  max-width: 520px;
+.roadmap-header .section-subtitle {
   margin: 0 auto;
-  line-height: 1.6;
 }
 
-/* ================= INFO BLOCKS ================= */
-
-.company-intro,
-.revenue-activities,
-.conclusion {
-  background: linear-gradient(135deg, rgba(8, 203, 0, 0.04), rgba(37, 57, 0, 0.08));
-  border: 1px solid rgba(8, 203, 0, 0.18);
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 48px;
-  backdrop-filter: blur(10px);
-}
-
-.company-intro h3,
-.revenue-activities h3,
-.conclusion h3 {
-  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
-  color: var(--text-color);
-  margin-bottom: 12px;
-  font-weight: 600;
-}
-
-.focus-text {
-  font-size: clamp(0.85rem, 1.4vw, 1rem);
-  color: var(--text-color);
-  margin-bottom: 14px;
-  font-weight: 500;
-}
-
-.intro-text {
-  font-size: clamp(0.82rem, 1.3vw, 0.95rem);
-  color: var(--text-primary);
-  line-height: 1.65;
-  opacity: 0.85;
-}
-
-/* ================= PHASES TIMELINE ================= */
-
-.phases-container {
-  position: relative;
-  margin-bottom: 60px;
-}
-
-/* Desktop: centre spine */
-.phases-container::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--text-color), rgba(8, 203, 0, 0.2));
-  transform: translateX(-50%);
-  z-index: 1;
-}
-
-.phase-card {
+.roadmap-pallets {
+  max-width: 960px;
+  margin: 0 auto;
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 48px;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pallets-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.pallets-row-center {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: calc(((960px - 48px) / 3 * 2) + 24px);
+  margin: 0 auto;
+}
+
+.roadmap-pallet {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-left: 4px solid;
+  border-radius: var(--radius-md);
+  padding: 28px 30px;
+  transition: var(--transition);
   position: relative;
-  z-index: 2;
+  cursor: pointer;
 }
 
-.phase-card:nth-child(even)              { flex-direction: row-reverse; }
-.phase-card:nth-child(odd)  .phase-content { margin-right: 48px; }
-.phase-card:nth-child(even) .phase-content { margin-left: 48px; }
-
-/* Phase circle */
-.phase-number {
-  background: linear-gradient(135deg, var(--text-color), var(--accent));
-  color: var(--main-bg);
-  width: 82px;
-  height: 82px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.78rem;
-  font-weight: 700;
-  position: relative;
-  z-index: 3;
-  box-shadow: 0 0 24px rgba(8, 203, 0, 0.35);
-  flex-shrink: 0;
-  text-align: center;
-  line-height: 1.3;
-}
-
-/* Phase content card */
-.phase-content {
-  background: linear-gradient(135deg, rgba(8, 203, 0, 0.04), rgba(37, 57, 0, 0.08));
-  border: 1px solid rgba(8, 203, 0, 0.18);
-  border-radius: 16px;
-  padding: 24px 22px;
-  max-width: 460px;
-  backdrop-filter: blur(8px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-align: left !important;
-}
-
-.phase-content:hover {
+.roadmap-pallet:hover {
+  border-color: var(--card-hover-border);
+  border-left-color: inherit;
+  box-shadow: var(--shadow-glow);
   transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(8, 203, 0, 0.15);
 }
 
-.phase-title {
-  font-size: clamp(0.92rem, 1.8vw, 1.2rem);
+.roadmap-pallet.pallet-expanded {
+  border-color: rgba(239, 68, 68, 0.2);
+  border-left-color: inherit;
+  box-shadow: var(--shadow-glow);
+}
+
+.pallet-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+}
+
+.pallet-phase {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  background: rgba(220, 38, 38, 0.06);
+  border-radius: 100px;
+  flex: 0 0 auto;
+}
+
+.pallet-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+  flex: 1 1 auto;
+}
+
+.pallet-subtitle {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  width: 100%;
+}
+
+.pallet-chevron {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.roadmap-pallet:hover .pallet-chevron {
   color: var(--text-color);
+}
+
+.pallet-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-top: 14px;
+  margin-bottom: 0;
+  font-weight: 300;
+}
+
+.pallet-details {
+  overflow: hidden;
+}
+
+.pallet-areas {
+  margin-top: 20px;
+  margin-bottom: 18px;
+}
+
+.areas-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--white);
   margin-bottom: 10px;
-  font-weight: 600;
-  line-height: 1.35;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.phase-description {
-  font-size: clamp(0.8rem, 1.3vw, 0.92rem);
-  color: var(--text-primary);
-  margin-bottom: 14px;
-  line-height: 1.55;
-  opacity: 0.85;
-}
-
-.phase-focus,
-.phase-outcome {
-  margin-bottom: 14px;
-}
-
-.phase-focus h4,
-.phase-outcome h4 {
-  font-size: clamp(0.82rem, 1.3vw, 0.95rem);
-  color: var(--text-color);
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.phase-focus ul {
+.pallet-areas ul {
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.phase-focus li {
-  font-size: clamp(0.78rem, 1.2vw, 0.88rem);
-  color: var(--text-primary);
-  margin-bottom: 6px;
-  padding-left: 18px;
+.pallet-areas li {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding-left: 22px;
   position: relative;
-  opacity: 0.85;
-  line-height: 1.45;
+  line-height: 1.5;
+  font-weight: 300;
 }
 
-.phase-focus li::before {
-  content: '→';
+.pallet-areas li::before {
+  content: '\2192';
   position: absolute;
   left: 0;
   color: var(--text-color);
-  font-weight: bold;
-  font-size: 0.78rem;
+  font-weight: 700;
 }
 
-.phase-outcome p {
-  font-size: clamp(0.78rem, 1.2vw, 0.88rem);
-  color: var(--text-primary);
-  line-height: 1.5;
-  opacity: 0.82;
-  font-style: italic;
+.pallet-outcome {
+  padding: 14px 18px;
+  background: rgba(220, 38, 38, 0.05);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--text-color);
 }
 
-/* ================= ACTIVITIES GRID ================= */
-
-.revenue-activities > p {
-  font-size: clamp(0.82rem, 1.3vw, 0.95rem);
-  color: var(--text-primary);
-  margin-bottom: 24px;
-  line-height: 1.6;
-  opacity: 0.85;
-}
-
-.activities-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
-}
-
-.activity-item {
-  background: rgba(8, 203, 0, 0.07);
-  border: 1px solid rgba(8, 203, 0, 0.25);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.activity-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(8, 203, 0, 0.15);
-}
-
-.activity-item h4 {
-  font-size: clamp(0.88rem, 1.5vw, 1.05rem);
-  color: var(--text-color);
-  margin-bottom: 8px;
+.outcome-label {
+  display: block;
+  font-size: 0.72rem;
   font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.activity-item p {
-  font-size: clamp(0.78rem, 1.2vw, 0.88rem);
-  color: var(--text-primary);
-  opacity: 0.78;
+.pallet-outcome p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.6;
+  font-weight: 300;
 }
 
-/* ================= CONCLUSION ================= */
-
-.conclusion {
-  text-align: center;
-  margin-bottom: 0;
+@media (max-width: 900px) {
+  .pallets-row { grid-template-columns: repeat(2, 1fr); }
+  .pallets-row-center { max-width: none; }
+  .roadmap-pallet { padding: 22px 20px; }
+  .pallet-title { font-size: 1.1rem; }
 }
 
-.conclusion p {
-  font-size: clamp(0.88rem, 1.5vw, 1rem);
-  color: var(--text-primary);
-  line-height: 1.7;
-  max-width: 720px;
-  margin: 0 auto;
-  opacity: 0.88;
-}
-
-/* ================= TABLET (≤1024px) — left-aligned spine ================= */
-
-@media (max-width: 1024px) {
-  .phases-container::before {
-    left: 24px;
-    transform: none;
-  }
-
-  .phase-card,
-  .phase-card:nth-child(even) {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-
-  .phase-card:nth-child(odd) .phase-content,
-  .phase-card:nth-child(even) .phase-content {
-    margin: 0 0 0 20px;
-    max-width: 100%;
-  }
-
-  .phase-number {
-    width: 48px;
-    height: 48px;
-    font-size: 0.65rem;
-    flex-shrink: 0;
-  }
-
-  .phase-content { flex: 1; }
-}
-
-/* ================= MOBILE (≤768px) ================= */
-
-@media (max-width: 768px) {
-  .roadmap { padding: 64px 0; }
-  .roadmap-container { padding: 0 16px; }
-  .roadmap-header { margin-bottom: 44px; }
-
-  .phases-container {
-    margin-bottom: 44px;
-  }
-
-  .phases-container::before { left: 18px; }
-
-  .phase-card { margin-bottom: 28px; }
-
-  .phase-number {
-    width: 36px;
-    height: 36px;
-    font-size: 0.55rem;
-  }
-
-  .phase-card:nth-child(odd) .phase-content,
-  .phase-card:nth-child(even) .phase-content {
-    margin-left: 14px;
-  }
-
-  .phase-content { padding: 16px 14px; border-radius: 12px; }
-
-  /* Hide outcome on mobile to reduce size */
-  .phase-outcome { display: none; }
-
-  .company-intro,
-  .revenue-activities,
-  .conclusion {
-    padding: 22px 16px;
-    margin-bottom: 28px;
-  }
-
-  .activities-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .activity-item { padding: 14px 12px; }
-}
-
-/* ================= SMALL PHONES (≤480px) ================= */
-
-@media (max-width: 480px) {
-  .roadmap { padding: 52px 0; }
-  .roadmap-container { padding: 0 12px; }
-
-  .phases-container::before { left: 14px; }
-
-  .phase-number { width: 28px; height: 28px; font-size: 0.48rem; }
-
-  .phase-card:nth-child(odd) .phase-content,
-  .phase-card:nth-child(even) .phase-content {
-    margin-left: 10px;
-  }
-
-  .phase-content { padding: 12px 10px; }
-
-  .phase-title { font-size: 0.85rem; }
-  .phase-description { font-size: 0.75rem; margin-bottom: 10px; }
-  .phase-focus li { font-size: 0.72rem; }
-
-  .activities-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .company-intro,
-  .revenue-activities,
-  .conclusion {
-    padding: 18px 14px;
-  }
+@media (max-width: 600px) {
+  .pallets-row { grid-template-columns: 1fr; }
+  .pallets-row-center { grid-template-columns: 1fr; }
+  .roadmap-pallet { padding: 18px 16px; }
+  .pallet-title { font-size: 1.05rem; }
+  .pallet-subtitle { font-size: 0.85rem; }
 }

@@ -1,170 +1,219 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import TypewriterText from './TypewriterText';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiChevronDown } from 'react-icons/fi';
 import './Roadmap.css';
 
+const phases = [
+  {
+    id: 1,
+    title: 'Quantum Circuit Simulation',
+    subtitle: 'for Healthcare Data',
+    desc: 'Develop and test quantum circuit models using classical simulators for diagnostics and genomics.',
+    areas: [
+      'Quantum algorithms for diagnostics & genomics',
+      'Simulation of quantum machine learning models',
+    ],
+    outcome: 'Proof-of-concept models using real healthcare datasets.',
+    color: '#00cc4c',
+  },
+  {
+    id: 2,
+    title: 'AI-Integrated Quantum',
+    subtitle: 'Circuit Design',
+    desc: 'Use AI to optimize and automate quantum circuit design for practical applications.',
+    areas: [
+      'AI/ML for reducing circuit depth and gate count',
+      'Generative AI for problem-specific circuits',
+    ],
+    outcome: 'Smarter, more efficient quantum circuits for practical use.',
+    color: '#00b841',
+  },
+  {
+    id: 3,
+    title: 'Quantum Hardware &',
+    subtitle: 'Manufacturing Unit',
+    desc: 'Build in-house capability for custom quantum processors and components.',
+    areas: [
+      'Fabrication of superconducting or photonic quantum chips',
+      'Development of control systems and cooling units',
+    ],
+    outcome: 'Hardware readiness to run proprietary quantum-AI models.',
+    color: '#00a336',
+  },
+  {
+    id: 4,
+    title: 'Platform Deployment &',
+    subtitle: 'Industry Integration',
+    desc: 'Deliver full-stack quantum-AI solutions to enterprise and industrial environments.',
+    areas: [
+      'Cloud-based quantum-AI platforms for manufacturing',
+      'Real-time analytics, optimization, predictive modeling',
+    ],
+    outcome: 'Commercial-grade solutions integrated into industry workflows.',
+    color: '#008f2c',
+  },
+  {
+    id: 5,
+    title: 'Cross-Industry Expansion &',
+    subtitle: 'Ecosystem Development',
+    desc: 'Extend quantum-AI solutions into high-impact sectors globally.',
+    areas: [
+      'Developer tools, APIs, education programs',
+      'Quantum-AI incubators and partnerships',
+    ],
+    outcome: 'A thriving ecosystem positioning phiMind as an industry leader.',
+    color: '#007b22',
+  },
+];
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.15 } },
+};
+
+const phaseVar = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
 const Roadmap = () => {
-  const [ref, inView] = useInView({
-    threshold: 0.2,
-    triggerOnce: true
-  });
+  const [expanded, setExpanded] = useState(null);
 
-  const phases = [
-    {
-      id: 1,
-      title: "Quantum Circuit Simulation for Healthcare Data",
-      description: "Develop and test quantum circuit models using classical simulators.",
-      focusAreas: [
-        "Quantum algorithms for diagnostics & genomics",
-        "Simulation of quantum machine learning models"
-      ],
-      outcome: "Proof-of-concept models using real healthcare datasets."
-    },
-    {
-      id: 2,
-      title: "AI-Integrated Quantum Circuit Design",
-      description: "Use AI to optimize and automate quantum circuit design.",
-      focusAreas: [
-        "AI/ML for reducing circuit depth and gate count",
-        "Generative AI for problem-specific circuits"
-      ],
-      outcome: "Smarter, more efficient quantum circuits for practical use."
-    },
-    {
-      id: 3,
-      title: "Quantum Hardware & Manufacturing Unit",
-      description: "Build in-house capability for custom quantum processors and components.",
-      focusAreas: [
-        "Fabrication of superconducting or photonic quantum chips",
-        "Development of control systems and cooling units"
-      ],
-      outcome: "Hardware readiness to run proprietary quantum-AI models."
-    },
-    {
-      id: 4,
-      title: "Platform Deployment & Industry Integration",
-      description: "Deliver full-stack quantum-AI solutions to enterprise, research, and industrial environments.",
-      focusAreas: [
-        "Cloud-based quantum-AI platforms for manufacturing",
-        "Real-time analytics, optimization, predictive modeling",
-        "Intelligent automation"
-      ],
-      outcome: "Commercial-grade solutions seamlessly integrated into diverse industry workflows, enabling faster decision-making and innovation."
-    },
-    {
-      id: 5,
-      title: "Cross-Industry Expansion & Ecosystem Development",
-      description: "Extend quantum-AI solutions into high-impact sectors including Automobile, Space Technology, Cybersecurity, and energy, while fostering a global innovation network.",
-      focusAreas: [
-        "Developer tools, APIs, education programs",
-        "Quantum-AI incubators"
-      ],
-      outcome: "A thriving ecosystem positioning Phi Mind as an industry leader."
-    }
-  ];
-
-  const boardMembers = [
-    "Mr. Sonet D Thomas",
-    "Mr. Naveen Joy"
-  ];
+  const toggle = (id) => setExpanded(expanded === id ? null : id);
 
   return (
-    <section className="roadmap" id="roadmap" ref={ref}>
-      <div className="roadmap-container">
+    <section className="roadmap section" id="roadmap">
+      <div className="roadmap-bg" />
+      <div className="container">
         <motion.div
           className="roadmap-header"
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
         >
-          <h2 className="roadmap-title">
-            <TypewriterText 
-              texts={['Φ', 'phi']}
-              typingSpeed={100}
-              pauseDuration={800}
-              startDelay={300}
-              className="phi-highlight"
-            />Mind Development Journey
+          <span className="section-tag">Roadmap</span>
+          <h2 className="section-title">
+            Development <span className="gradient-text">Journey</span>
           </h2>
-          <p className="roadmap-subtitle">
-            Five-Phase Strategic Roadmap for Quantum-AI Innovation
+          <div className="section-divider" />
+          <p className="section-subtitle">
+            Five-phase strategic roadmap for Quantum-AI innovation — click a phase to expand
           </p>
         </motion.div>
 
-        {/* <motion.div
-          className="company-intro"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          <h3>Phi Mind Pvt. Ltd. – Vision</h3>
-          <p className="focus-text">
-            <strong>Focus:</strong> Quantum Artificial Intelligence for Industrial Development and Drug Discovery
-          </p>
-          <p className="intro-text">
-            We, the undersigned board members, {boardMembers.join(' and ')}, are establishing 
-            Phi Mind Pvt. Ltd., a technology startup dedicated to harnessing the power of 
-            Quantum Computing and Artificial Intelligence (AI). Our long-term mission is to 
-            develop quantum-AI technologies that can transform industries, starting with healthcare, 
-            and later expanding into multiple sectors.
-          </p>
-        </motion.div> */}
-
-        <div className="phases-container">
-          {phases.map((phase, index) => (
-            <motion.div
-              key={phase.id}
-              className="phase-card"
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="phase-number">
-                Phase {phase.id}
-              </div>
-              <div className="phase-content">
-                <h3 className="phase-title">{phase.title}</h3>
-                <p className="phase-description">{phase.description}</p>
-                
-                <div className="phase-focus">
-                  <h4>Focus Areas:</h4>
-                  <ul>
-                    {phase.focusAreas.map((area, areaIndex) => (
-                      <li key={areaIndex}>{area}</li>
-                    ))}
-                  </ul>
+        <div className="roadmap-pallets">
+          <motion.div
+            className="pallets-row"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            {phases.slice(0, 3).map((phase) => (
+              <motion.div
+                key={phase.id}
+                className={`roadmap-pallet ${expanded === phase.id ? 'pallet-expanded' : ''}`}
+                variants={phaseVar}
+                onClick={() => toggle(phase.id)}
+                style={{ borderLeftColor: phase.color }}
+              >
+                <div className="pallet-header">
+                  <span className="pallet-phase" style={{ color: phase.color }}>Phase {phase.id}</span>
+                  <h3 className="pallet-title">{phase.title}</h3>
+                  <h4 className="pallet-subtitle">{phase.subtitle}</h4>
+                  <motion.div
+                    className="pallet-chevron"
+                    animate={{ rotate: expanded === phase.id ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <FiChevronDown size={20} />
+                  </motion.div>
                 </div>
-                
-                <div className="phase-outcome">
-                  <h4>Outcome:</h4>
-                  <p>{phase.outcome}</p>
+                <p className="pallet-desc">{phase.desc}</p>
+                <AnimatePresence>
+                  {expanded === phase.id && (
+                    <motion.div
+                      className="pallet-details"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35 }}
+                    >
+                      <div className="pallet-areas">
+                        <span className="areas-label">Focus Areas</span>
+                        <ul>
+                          {phase.areas.map((a, ai) => (
+                            <li key={ai}>{a}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="pallet-outcome">
+                        <span className="outcome-label">Expected Outcome</span>
+                        <p>{phase.outcome}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </motion.div>
+          <motion.div
+            className="pallets-row-center"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            {phases.slice(3).map((phase) => (
+              <motion.div
+                key={phase.id}
+                className={`roadmap-pallet ${expanded === phase.id ? 'pallet-expanded' : ''}`}
+                variants={phaseVar}
+                onClick={() => toggle(phase.id)}
+                style={{ borderLeftColor: phase.color }}
+              >
+                <div className="pallet-header">
+                  <span className="pallet-phase" style={{ color: phase.color }}>Phase {phase.id}</span>
+                  <h3 className="pallet-title">{phase.title}</h3>
+                  <h4 className="pallet-subtitle">{phase.subtitle}</h4>
+                  <motion.div
+                    className="pallet-chevron"
+                    animate={{ rotate: expanded === phase.id ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <FiChevronDown size={20} />
+                  </motion.div>
                 </div>
-              </div>
-              <div className="phase-connector"></div>
-            </motion.div>
-          ))}
+                <p className="pallet-desc">{phase.desc}</p>
+                <AnimatePresence>
+                  {expanded === phase.id && (
+                    <motion.div
+                      className="pallet-details"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35 }}
+                    >
+                      <div className="pallet-areas">
+                        <span className="areas-label">Focus Areas</span>
+                        <ul>
+                          {phase.areas.map((a, ai) => (
+                            <li key={ai}>{a}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="pallet-outcome">
+                        <span className="outcome-label">Expected Outcome</span>
+                        <p>{phase.outcome}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
-
-
-        <motion.div
-          className="conclusion"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          viewport={{ once: true }}
-        >
-          <h3>Our Vision</h3>
-          <p>
-            Phi Mind Pvt. Ltd. will operate at the cutting edge of technology, uniting quantum 
-            computation with artificial intelligence to create real-world impact. We are seeking 
-            incubation support to accelerate our R&D, form industry partnerships, and bring our 
-            phased vision to market.
-          </p>
-        </motion.div>
       </div>
     </section>
   );

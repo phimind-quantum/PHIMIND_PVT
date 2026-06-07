@@ -1,141 +1,200 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FiMenu, FiX, FiSun, FiMoon, FiArrowLeft } from 'react-icons/fi';
 import TypewriterText from './TypewriterText';
 import './Navbar.css';
 
+const navItems = [
+  { label: 'About',    id: 'about'   },
+  { label: 'Team',     id: 'teams'   },
+  { label: 'Roadmap',  id: 'roadmap' },
+  { label: 'Services', id: 'services'},
+  { label: 'Tools',    id: 'tools'   },
+];
+
+const helixLinks = [
+  { path: '/helixone/databases', label: 'Databases' },
+  { path: '/helixone/tools', label: 'Prediction Tools' },
+];
+
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dark, setDark] = useState(true);
+
+  const isHelixPage = location.pathname.startsWith('/helixone');
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const stored = localStorage.getItem('phimind-theme');
+    if (stored === 'light') {
+      setDark(false);
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
     if (menuOpen) {
-      /*
-        When we hide the scrollbar (overflow:hidden), the page width
-        jumps by the scrollbar width (~15px on Windows/Android),
-        causing the hero content to shift right.
-
-        Fix: measure the scrollbar width and add it as padding-right
-        on <body> BEFORE hiding overflow, so the total width stays the same.
-      */
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
+      const sbw = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.paddingRight = `${sbw}px`;
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
       document.body.style.paddingRight = '';
     }
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
-    };
   }, [menuOpen]);
 
-  const scrollToSection = (sectionId) => {
-    setMenuOpen(false);
-    setTimeout(() => {
-      const el = document.getElementById(sectionId);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }, 300);
+  const toggleTheme = () => {
+    const next = !dark;
+    setDark(next);
+    if (next) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('phimind-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('phimind-theme', 'light');
+    }
   };
 
-  const navItems = [
-    { label: 'About',    id: 'about'   },
-    { label: 'Teams',    id: 'teams'   },
-    { label: 'Roadmap',  id: 'roadmap' },
-    { label: 'Services', id: 'services'},
-  ];
+  const scrollTo = (id) => {
+    setMenuOpen(false);
+    setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }, 300);
+  };
 
   return (
     <>
       <motion.nav
-        className={`navbar ${isScrolled ? 'scrolled' : ''}`}
+        className={`navbar ${scrolled ? 'scrolled' : ''}`}
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6 }}
       >
-        <div className="nav-container">
-
-          {/* Logo */}
-          <motion.div className="nav-logo" whileHover={{ scale: 1.04 }} transition={{ duration: 0.2 }}>
-            <a href="/" aria-current="page">
-              <span className="logo-text">
-                <TypewriterText
-                  texts={['phi', 'Φ']}
-                  typingSpeed={150}
-                  pauseDuration={1000}
-                  startDelay={500}
-                  className="phi-part animated"
-                />
-                <span className="mind-part">Mind</span>
+        <div className="nav-inner">
+          {isHelixPage ? (
+            <Link to="/" className="nav-logo">
+              <FiArrowLeft size={18} style={{ marginRight: '8px' }} />
+              <span className="logo-phi">
+                <TypewriterText texts={['phi', 'Φ']} typingSpeed={150} pauseDuration={1200} startDelay={500} className="phi-char" />
               </span>
-            </a>
-          </motion.div>
+              <span className="logo-mind">Mind</span>
+            </Link>
+          ) : (
+            <motion.a
+              className="nav-logo"
+              href="/"
+              aria-current="page"
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className="logo-phi">
+                <TypewriterText texts={['phi', 'Φ']} typingSpeed={150} pauseDuration={1200} startDelay={500} className="phi-char" />
+              </span>
+              <span className="logo-mind">Mind</span>
+            </motion.a>
+          )}
 
-          {/* Desktop nav links */}
-          <div className="nav-links">
-            {navItems.map((item) => (
-              <motion.button
-                key={item.id}
-                className="nav-link"
-                onClick={() => scrollToSection(item.id)}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.15 }}
-              >
-                {item.label}
-              </motion.button>
-            ))}
+          <div className="nav-right">
+            <div className="nav-links">
+              {isHelixPage ? (
+                helixLinks.map((link) => (
+                  <Link key={link.path} to={link.path} className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}>
+                    {link.label}
+                  </Link>
+                ))
+              ) : (
+                navItems.map((item) => (
+                  <button key={item.id} className="nav-link" onClick={() => scrollTo(item.id)}>
+                    {item.label}
+                  </button>
+                ))
+              )}
+            </div>
+
+            <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+              {dark ? <FiSun size={16} /> : <FiMoon size={16} />}
+            </button>
+
+            <button
+              className={`hamburger ${menuOpen ? 'open' : ''}`}
+              onClick={() => setMenuOpen((p) => !p)}
+              aria-label="Toggle menu"
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+            </button>
           </div>
-
-          {/* Hamburger — only visible on mobile via CSS */}
-          <button
-            className={`hamburger ${menuOpen ? 'open' : ''}`}
-            onClick={() => setMenuOpen(prev => !prev)}
-            aria-label="Toggle navigation"
-            aria-expanded={menuOpen}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-
         </div>
       </motion.nav>
 
-      {/*
-        Conditionally mounted with AnimatePresence.
-        position:fixed — completely outside document flow,
-        will NEVER push or shift any page content.
-      */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="mobile-menu"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigation menu"
+            className="mobile-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.22 }}
+            transition={{ duration: 0.25 }}
           >
-            {navItems.map((item, i) => (
+            <div className="mobile-menu">
+              {isHelixPage ? (
+                <>
+                  {helixLinks.map((link, i) => (
+                    <motion.div
+                      key={link.path}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.25, delay: i * 0.07 }}
+                    >
+                      <Link to={link.path} className="mobile-link" onClick={() => setMenuOpen(false)}>
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25, delay: helixLinks.length * 0.07 }}
+                  >
+                    <Link to="/" className="mobile-link" onClick={() => setMenuOpen(false)}>
+                      Back to phiMind
+                    </Link>
+                  </motion.div>
+                </>
+              ) : (
+                <>
+                  {navItems.map((item, i) => (
+                    <motion.button
+                      key={item.id}
+                      className="mobile-link"
+                      onClick={() => scrollTo(item.id)}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.25, delay: i * 0.07 }}
+                    >
+                      {item.label}
+                    </motion.button>
+                  ))}
+                </>
+              )}
               <motion.button
-                key={item.id}
-                className="nav-link"
-                onClick={() => scrollToSection(item.id)}
-                initial={{ opacity: 0, y: 18 }}
+                className="mobile-link theme-mobile"
+                onClick={toggleTheme}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2, delay: i * 0.06 }}
+                transition={{ duration: 0.25, delay: (isHelixPage ? helixLinks.length + 1 : navItems.length) * 0.07 }}
               >
-                {item.label}
+                {dark ? 'Light Mode' : 'Dark Mode'}
               </motion.button>
-            ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

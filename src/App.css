@@ -1,6 +1,7 @@
 .App {
   min-height: 100vh;
   overflow-x: hidden;
+  position: relative;
 }
 
 main {
@@ -8,31 +9,74 @@ main {
   z-index: 1;
 }
 
-/* Smooth scrolling for the entire app */
-html {
-  scroll-behavior: smooth;
+body {
+  cursor: none;
 }
 
-/* Ensure proper stacking context */
-.App > * {
+a, button, .btn, input, textarea, select, [data-cursor] {
+  cursor: none;
+}
+
+.custom-cursor {
+  position: fixed;
+  top: -16px;
+  left: -16px;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  border: 1.5px solid var(--cursor-color);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, transform 0.15s ease;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  top: -2px;
+  left: -2px;
+  width: 4px;
+  height: 4px;
+  background: var(--text-color);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  transition: transform 0.05s linear;
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--progress-bar);
+  z-index: 100000;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+.section-divider-wave {
   position: relative;
   z-index: 1;
+  line-height: 0;
+  margin-bottom: -1px;
 }
 
-/* Custom scrollbar for the entire app */
-.App::-webkit-scrollbar {
-  width: 8px;
+.section-divider-wave svg {
+  display: block;
+  width: 100%;
+  height: 60px;
 }
 
-.App::-webkit-scrollbar-track {
-  background: var(--main-bg);
+.section-divider-wave.wave-alt svg {
+  height: 40px;
 }
 
-.App::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 4px;
-}
-
-.App::-webkit-scrollbar-thumb:hover {
-  background: var(--navbar-footer);
+@media (max-width: 768px) {
+  .section-divider-wave svg { height: 36px; }
+  .section-divider-wave.wave-alt svg { height: 24px; }
+  .custom-cursor { display: none; }
+  .custom-cursor-dot { display: none; }
+  body { cursor: auto; }
+  a, button, .btn, input, textarea, select, [data-cursor] { cursor: auto; }
 }
