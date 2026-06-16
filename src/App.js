@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Stats from './components/Stats';
@@ -14,6 +14,7 @@ import HelixHome from './helixone/pages/Home';
 import HelixDatabases from './helixone/pages/Databases';
 import HelixTools from './helixone/pages/Tools';
 import HelixToolDetails from './helixone/pages/ToolDetails';
+import Phiverse from './phiverse/Phiverse';
 import './App.css';
 
 const MainPage = () => {
@@ -48,6 +49,12 @@ const MainPage = () => {
       <FAQ />
     </>
   );
+};
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
 };
 
 function App() {
@@ -92,6 +99,7 @@ function App() {
       <div className="custom-cursor-dot" ref={cursorDotRef} />
       <div className="quantum-grid" />
       <div className="noise-overlay" />
+      <ScrollToTop />
       <Navbar />
       <main>
         <Routes>
@@ -100,6 +108,7 @@ function App() {
           <Route path="/helixone/databases" element={<HelixDatabases />} />
           <Route path="/helixone/tools" element={<HelixTools />} />
           <Route path="/helixone/tool/:id" element={<HelixToolDetails />} />
+          <Route path="/phiverse" element={<Phiverse />} />
         </Routes>
       </main>
       <Footer />
