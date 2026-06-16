@@ -5,7 +5,7 @@ import { FiArrowDown } from 'react-icons/fi';
 import './Hero.css';
 import logoImg from '../images/logo.png';
 
-const PARTICLE_COUNT = 30;
+const PARTICLE_COUNT = 50;
 const BURST_COUNT = 12;
 
 const ParticleNetwork = () => {
@@ -49,8 +49,8 @@ const ParticleNetwork = () => {
         const dx = mx - this.x;
         const dy = my - this.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 300) {
-          const force = (1 - dist / 300) * 0.015;
+        if (dist < 400) {
+          const force = (1 - dist / 400) * 0.02;
           this.vx += dx * force;
           this.vy += dy * force;
           const maxSpeed = 2;
@@ -71,7 +71,7 @@ const ParticleNetwork = () => {
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 204, 76, 0.15)';
+        ctx.fillStyle = 'rgba(0, 204, 76, 0.35)';
         ctx.fill();
       }
     }
@@ -98,7 +98,7 @@ const ParticleNetwork = () => {
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(239, 68, 68, ${this.life * 0.8})`;
+        ctx.fillStyle = `rgba(0, 204, 76, ${this.life * 0.9})`;
         ctx.fill();
       }
     }
@@ -132,12 +132,12 @@ const ParticleNetwork = () => {
           const dx = p[i].x - p[j].x;
           const dy = p[i].y - p[j].y;
           const distSq = dx * dx + dy * dy;
-          if (distSq < 14400) {
+          if (distSq < 32400) {
             const dist = Math.sqrt(distSq);
-            const alpha = (1 - dist / 120) * 0.08;
+            const alpha = (1 - dist / 180) * 0.25;
             const mx2 = (p[i].x + p[j].x) / 2 - mx;
             const my2 = (p[i].y + p[j].y) / 2 - my;
-            const glow = (mx2 * mx2 + my2 * my2) < 62500 ? 1.5 : 1;
+            const glow = (mx2 * mx2 + my2 * my2) < 62500 ? 3 : 1;
             ctx.beginPath();
             ctx.moveTo(p[i].x, p[i].y);
             ctx.lineTo(p[j].x, p[j].y);

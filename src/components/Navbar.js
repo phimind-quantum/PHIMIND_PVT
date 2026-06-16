@@ -24,7 +24,9 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(true);
 
+  const isSubPage = location.pathname.startsWith('/helixone') || location.pathname.startsWith('/phiverse');
   const isHelixPage = location.pathname.startsWith('/helixone');
+  const isPhiVersePage = location.pathname.startsWith('/phiverse');
 
   useEffect(() => {
     const stored = localStorage.getItem('phimind-theme');
@@ -79,7 +81,7 @@ const Navbar = () => {
         transition={{ duration: 0.6 }}
       >
         <div className="nav-inner">
-          {isHelixPage ? (
+          {isSubPage ? (
             <Link to="/" className="nav-logo">
               <FiArrowLeft size={18} style={{ marginRight: '8px' }} />
               <span className="logo-phi">
@@ -110,7 +112,7 @@ const Navbar = () => {
                     {link.label}
                   </Link>
                 ))
-              ) : (
+              ) : isPhiVersePage ? null : (
                 navItems.map((item) => (
                   <button key={item.id} className="nav-link" onClick={() => scrollTo(item.id)}>
                     {item.label}
@@ -169,6 +171,18 @@ const Navbar = () => {
                     </Link>
                   </motion.div>
                 </>
+              ) : isPhiVersePage ? (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <Link to="/" className="mobile-link" onClick={() => setMenuOpen(false)}>
+                      Back to phiMind
+                    </Link>
+                  </motion.div>
+                </>
               ) : (
                 <>
                   {navItems.map((item, i) => (
@@ -190,7 +204,7 @@ const Navbar = () => {
                 onClick={toggleTheme}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.25, delay: (isHelixPage ? helixLinks.length + 1 : navItems.length) * 0.07 }}
+                transition={{ duration: 0.25, delay: (isHelixPage ? helixLinks.length + 1 : isPhiVersePage ? 1 : navItems.length) * 0.07 }}
               >
                 {dark ? 'Light Mode' : 'Dark Mode'}
               </motion.button>

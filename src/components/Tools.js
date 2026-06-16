@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiCpu, FiDroplet, FiExternalLink } from 'react-icons/fi';
+import { FiCpu, FiDroplet, FiExternalLink, FiFileText } from 'react-icons/fi';
 import './Tools.css';
 
 const tools = [
@@ -33,8 +33,24 @@ const tools = [
       'PDB file validation & repair',
       'One-click ready-to-dock output',
     ],
-    gradient: 'linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05))',
-    borderColor: 'rgba(239, 68, 68, 0.3)',
+    gradient: 'linear-gradient(135deg, rgba(220, 38, 38, 0.15), rgba(220, 38, 38, 0.05))',
+    borderColor: 'rgba(220, 38, 38, 0.3)',
+  },
+  {
+    id: 'phiverse',
+    icon: FiFileText,
+    name: 'PhiVerse',
+    tagline: 'Plagiarism Removal Service',
+    description: 'Upload your thesis, research paper, or report and receive a plagiarism-free version. Professional paraphrasing that preserves your original meaning and structure. Quick turnaround with 100% originality guarantee.',
+    features: [
+      'Professional plagiarism removal',
+      'Preserves original meaning & structure',
+      ' ₹2,000 per document',
+      '24-48 hour turnaround',
+    ],
+    gradient: 'linear-gradient(135deg, rgba(147, 51, 234, 0.15), rgba(147, 51, 234, 0.05))',
+    borderColor: 'rgba(147, 51, 234, 0.3)',
+    launchUrl: '/phiverse/',
   },
 ];
 
@@ -87,7 +103,7 @@ const Tools = () => {
                 </ul>
                 {tool.launchUrl ? (
                   <Link to={tool.launchUrl} className="tool-launch-btn">
-                    <FiExternalLink size={16} /> Launch HelixOne
+                    <FiExternalLink size={16} /> Launch {tool.name}
                   </Link>
                 ) : (
                   <div className="tool-coming">

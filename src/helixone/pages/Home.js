@@ -32,9 +32,11 @@ const HelixHome = () => {
               <span className="glow-text">Free</span> Genomics Platform — No Sign-Up Required
             </motion.div>
             <motion.h1 variants={itemVariants} className="hero-title">
-              The Unified Platform for <br />
-              <span className="text-accent-gradient">Genomics Research</span>
+              Helix<span className="text-accent-gradient">One</span>
             </motion.h1>
+            <motion.p variants={itemVariants} className="hero-tagline">
+              The Unified Platform for <span className="text-accent-gradient">Genomics Research</span>
+            </motion.p>
             <motion.p variants={itemVariants} className="hero-subtitle">
               Access 50+ premier genomics databases and prediction tools. Analyze data and run complex genomic analysis — completely free.
             </motion.p>

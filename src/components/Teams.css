@@ -162,7 +162,7 @@
 
 .team-link-icon:hover {
   background: rgba(220, 38, 38, 0.15);
-  border-color: rgba(239, 68, 68, 0.3);
+  border-color: rgba(220, 38, 38, 0.3);
   color: var(--accent);
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(220, 38, 38, 0.12);

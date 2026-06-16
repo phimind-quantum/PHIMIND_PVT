@@ -47,10 +47,28 @@
   flex-direction: column;
 }
 
+.tool-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 40px;
+  right: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+  border-radius: 2px;
+  opacity: 0.4;
+  transition: var(--transition);
+}
+
 .tool-card:hover {
   border-color: var(--card-hover-border);
-  box-shadow: var(--shadow-glow);
+  box-shadow: var(--shadow-glow), 0 0 40px rgba(0, 204, 76, 0.06);
   transform: translateY(-6px);
+}
+
+.tool-card:hover::after {
+  opacity: 1;
+  height: 3px;
 }
 
 .tool-badge {
@@ -102,9 +120,21 @@
 
 .tool-tagline {
   font-size: 0.88rem;
-  color: var(--text-color);
+  color: var(--accent-secondary);
   margin-bottom: 16px;
-  font-weight: 400;
+  font-weight: 500;
+}
+
+.tool-tagline::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-secondary);
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  box-shadow: 0 0 8px rgba(0, 204, 76, 0.5);
 }
 
 .tool-desc {
@@ -149,7 +179,7 @@
   justify-content: center;
   gap: 8px;
   padding: 12px 24px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-green));
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
   color: var(--white);
   border: none;
   border-radius: var(--radius-sm);
